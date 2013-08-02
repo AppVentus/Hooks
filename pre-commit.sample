@@ -1,8 +1,13 @@
 #!/bin/sh
 
 # Execute syntax and phpunit tests
-if [ -f .git/hooks/appventus.pre-commit.tester ]; then
-  php .git/hooks/appventus.pre-commit.tester
-  exit 0
+if [ -f vendor/appventus/hooks/appventus.pre-commit.tester ]; then
+  php vendor/appventus/hooks/appventus.pre-commit.tester
+  if [ $? == "0" ] ; then
+    exit 0
+  else
+    exit 1
+  fi
+
 fi
 

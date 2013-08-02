@@ -36,7 +36,7 @@ echo PHP_EOL;
 echo '+ Starting unit tests'.PHP_EOL;
 
 // Execute project unit tests
-exec('phpunit -c '.__DIR__.'/../../app/', $output, $returnCode);
+exec('phpunit -c app/', $output, $returnCode);
 
 // if the build failed, output a summary and fail
 if ($returnCode !== 0)
