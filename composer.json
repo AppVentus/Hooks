@@ -13,7 +13,8 @@
     "minimum-stability": "dev",
     "scripts": {
         "post-update-cmd": [
-            "./vendor/appventus/hooks/deploy.sh"
+            "sudo chmod a+x deploy.sh",
+            "sh deploy.sh"
         ]
     }
 
