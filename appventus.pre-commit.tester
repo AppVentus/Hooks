@@ -1,0 +1,63 @@
+#!/usr/bin/php
+<?php
+
+exec("git status --porcelain | awk '/^ M/{ print $2 }'", $output, $returnCode);
+
+echo PHP_EOL;
+echo '+ Starting syntax check'.PHP_EOL;
+
+$total = 0;
+foreach ($output as $file) {
+    $total++;
+}
+$i=0;
+
+foreach ($output as $file) {
+    $i++;
+    $progress = $i/$total*100;
+
+    exec('php -l '.$file." > /dev/null", $output, $returnCode);
+    if ($returnCode !== 0) {
+        echo "!";
+        echo PHP_EOL;
+        echo '!!! syntax check failed for '.$file.PHP_EOL;
+        exit(1);
+    }
+    if ($progress%($total/100) == 0){
+        echo "=";
+    }
+
+}
+echo "> 100%".PHP_EOL;
+
+
+// Tell the commiter what the hook is doing
+echo PHP_EOL;
+echo '+ Starting unit tests'.PHP_EOL;
+
+// Execute project unit tests
+exec('phpunit -c '.__DIR__.'/../../app/', $output, $returnCode);
+
+// if the build failed, output a summary and fail
+if ($returnCode !== 0)
+{
+    // find the line with the summary; this might not be the last
+    while (($minimalTestSummary = array_pop($output)) !== null)
+    {
+        if (strpos($minimalTestSummary, 'Tests:') !== false)
+        {
+            break;
+        }
+    }
+
+    // output the status and abort the commit
+    echo '+ Test suite failed:'.PHP_EOL;
+    echo $minimalTestSummary;
+    echo chr(27).'[0m'.PHP_EOL; // disable colors and add a line break
+    echo PHP_EOL;
+    exit(1);
+}
+
+echo '+ All tests passed.'.PHP_EOL;
+echo PHP_EOL;
+exit(0);

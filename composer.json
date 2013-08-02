@@ -1,0 +1,21 @@
+{
+    "name": "appventus/hooks",
+    "description": "AppVentus custom git hooks",
+    "keywords": ["hooks", "git", "test", "phpunit", "syntax"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Paul Andrieux (AppVentus)",
+            "email": "paul@appventus.com",
+            "homepage": "http://appventus.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "scripts": {
+        "post-update-cmd": [
+            "./vendor/appventus/hooks/deploy.sh"
+        ]
+    }
+
+
+}

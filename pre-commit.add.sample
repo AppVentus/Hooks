@@ -1,0 +1,7 @@
+
+# Execute syntax and phpunit tests
+if [ -f .git/hooks/appventus.pre-commit.tester ]; then
+  php .git/hooks/appventus.pre-commit.tester
+  exit 0
+fi
+
