@@ -7,5 +7,6 @@ if [ -f ../../../.git/hooks/pre-commit ]; then
     fi
 else
     touch ../../../.git/hooks/pre-commit
+    chmod a+x ../../../.git/hooks/pre-commit
     cat pre-commit.sample >> ../../../.git/hooks/pre-commit
 fi
