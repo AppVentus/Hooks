@@ -36,7 +36,12 @@ echo PHP_EOL;
 echo '+ Starting unit tests'.PHP_EOL;
 
 // Execute project unit tests
-exec('phpunit -c app/', $output, $returnCode);
+if (file_exists('bin/phpunit')) {
+    $phpunit = 'bin/phpunit';
+} else {
+    $phpunit = 'phpunit';
+}
+exec($phpunit . ' -c app/', $output, $returnCode);
 
 // if the build failed, output a summary and fail
 if ($returnCode !== 0)
